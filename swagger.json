@@ -1,0 +1,146 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Restaurant-Reservations",
+    "version": "1.0",
+    "contact": {}
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "security": [],
+  "paths": {
+    "/availability": {
+      "get": {
+        "summary": "Find restaurants by Available Date and Time",
+        "tags": [
+          "restaurant"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Required Date and Time"
+          },
+          {
+            "name": "people",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "operationId": "Availability",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Availability"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reserve": {
+      "post": {
+        "summary": "Restaurant reservation by Phone/internet/Walkin",
+        "tags": [
+          "restaurant"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Reservation",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "operationId": "Reserve",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Reserve"
+            }
+          }
+        }
+      }
+    }
+  },
+  "host": "localhost:8098",
+  "basePath": "/v1/restaurants",
+  "tags": [
+    {
+      "name": "restaurant"
+    }
+  ],
+  "definitions": {
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "reservedBy": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "Reserve": {
+      "type": "object",
+      "properties": {
+        "tableId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "YYYYMMDDThhmmssZ"
+        }
+      }
+    },
+    "Availability": {
+      "type": "object",
+      "properties": {
+        "availableSeats": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tableId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "seatCoordinates": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
